@@ -123,7 +123,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlackScholesPricer.cpp" />
+    <ClCompile Include="CallOption.cpp" />
+    <ClCompile Include="EuropeanVanillaOption.cpp" />
+    <ClCompile Include="Option.cpp" />
     <ClCompile Include="Project_C++.cpp" />
+    <ClCompile Include="PutOption.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BlackScholesPricer.h" />
+    <ClInclude Include="CallOption.h" />
+    <ClInclude Include="EuropeanVanillaOption.h" />
+    <ClInclude Include="Option.h" />
+    <ClInclude Include="PutOption.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
