@@ -17,6 +17,9 @@ public:
 
 	virtual ~Option() {}
 
+	//Ajout MF
+	virtual bool isAmericanOption();
+
 };
 #endif // !OPTION_H
 

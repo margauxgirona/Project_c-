@@ -10,8 +10,30 @@ CRRPricer::CRRPricer(Option * option, int depth, double asset_price, double up, 
         // trees initialisation
         _S.setDepth(depth);
         _H.setDepth(depth);
+//Ajout MF
+        _Exercise.setDepth(depth);
 
         _computed = false;
+}
+
+CRRPricer::CRRPricer(Option* option, int depth, double asset_price, double r, double volatility) : 
+_option(option), _depth(depth), _S0(asset_price), _r(r){
+
+    double T = option->getExpiry();
+    double h = T / depth;
+
+    _u = std::exp((r + 0.5 * volatility * volatility) * h + volatility * std::sqrt(h)) - 1.0;
+    _d = std::exp((r + 0.5 * volatility * volatility) * h - volatility * std::sqrt(h)) - 1.0;
+    _r = std::exp(r * h) - 1.0;
+
+    if (!(_d < _r && _r < _u))
+        throw std::invalid_argument("Arbitrage condition not respected (D < R < U)");
+
+    _S.setDepth(depth);
+    _H.setDepth(depth);
+    _Exercise.setDepth(depth);  
+    _computed = false;
+
 }
 
 // function created to replace std::pow()
@@ -38,12 +60,35 @@ void CRRPricer::compute(){
     // risk neutral probability
     double q = (_r - _d) / (_u - _d);
 
-    // compute _H
-    for(int n = _depth-1; n >= 0; n--){
-        for(int i = 0; i <= n; i++){
-            double value = q * _H.getNode(n+1, i+1) + (1 -q) * _H.getNode(n+1, i);
-            value /= (1 + _r);
-            _H.setNode(n, i, value);
+    
+ // Ajout MF
+    if (_option->isAmericanOption()) {
+        for (int n = _depth - 1; n >= 0; n--) {
+            for (int i = 0; i <= n; i++) {
+                // Valeur de continuation
+                double continuation = (q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i)) / (1 + _r);
+
+                // Valeur d'exercice immédiat
+                double immediate = _option->payoff(_S.getNode(n, i));
+
+                if (immediate > continuation) {
+                    _H.setNode(n, i, immediate);
+                    _Exercise.setNode(n, i, true);}
+                else {
+                    _H.setNode(n, i, continuation);
+                    _Exercise.setNode(n, i, false);}
+            }
+        }
+    }
+
+    else {
+        // compute _H
+        for (int n = _depth - 1; n >= 0; n--) {
+            for (int i = 0; i <= n; i++) {
+                double value = q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i);
+                value /= (1 + _r);
+                _H.setNode(n, i, value);
+            }
         }
     }
 
