@@ -3,38 +3,64 @@
 #include "PutOption.h"
 #include <cmath>
 
+BlackScholesPricer::BlackScholesPricer(EuropeanVanillaOption* o, double a, double i, double v) : vanilla(o), asset_price(a), interest_rate(i), volatility(v) {}
+
+BlackScholesPricer::BlackScholesPricer(EuropeanDigitalOption* o, double a, double i, double v) : digital(o), asset_price(a), interest_rate(i), volatility(v) {}
+
+
 //calcul du prix
 double BlackScholesPricer::operator()() const {
-	double S = asset_price;
-	double K = option->getStrike();
-	double T = option->getExpiry();
-	double r = interest_rate;
-	double v = volatility;
-	double d1 = (std::log(S / K) + (r + 0.5 * v * v) * T) / (v * std::sqrt(T));
-	double d2 = d1 - v * std::sqrt(T);
-	if (option->GetOptionType() == EuropeanVanillaOption::call) {
-		return S * N(d1) - K * std::exp(-r * T) * N(d2);
+	// vanilla option
+	if (vanilla) {
+		double d1 = (std::log(asset_price / vanilla->getStrike()) + (interest_rate + 0.5 * volatility * volatility) * vanilla->getExpiry()) / (volatility * std::sqrt(vanilla->getExpiry()));
+		double d2 = d1 - volatility * std::sqrt(vanilla->getExpiry());
+
+		if (vanilla->GetOptionType() == EuropeanVanillaOption::call) {
+			return asset_price * N(d1) - vanilla->getStrike() * std::exp(-interest_rate * vanilla->getExpiry()) * N(d2);
+		}
+		else if (vanilla->GetOptionType() == EuropeanVanillaOption::put) {
+			return vanilla->getStrike() * std::exp(-interest_rate * vanilla->getExpiry()) * N(-d2) - asset_price * N(-d1);
+		}
+		else
+			throw std::invalid_argument("Unknown option type.");
 	}
-	else if (option->GetOptionType() == EuropeanVanillaOption::put) {
-		return K * std::exp(-r * T) * N(-d2) - S * N(-d1);
+	// digital option
+	else if (digital) {
+		double d1 = (std::log(asset_price / digital->getStrike()) + (interest_rate + 0.5 * volatility * volatility) * digital->getExpiry()) / (volatility * std::sqrt(digital->getExpiry()));
+		double d2 = d1 - volatility * std::sqrt(digital->getExpiry());
+
+		if (digital->GetOptionType() == EuropeanDigitalOption::call)
+            return std::exp(-interest_rate * digital->getExpiry()) * N(d2);
+        else if (digital->GetOptionType() == EuropeanDigitalOption::put)
+            return std::exp(-interest_rate * digital->getExpiry()) * N(-d2);
+		else
+			throw std::invalid_argument("Unknown option type.");
 	}
 	else {
-		throw std::invalid_argument("Unknown option type.");
+			throw std::invalid_argument("Unknown option type.");
 	}
 }
 
 double BlackScholesPricer::delta() const {
-	double S = asset_price;
-	double K = option->getStrike();
-	double T = option->getExpiry();
-	double r = interest_rate;
-	double v = volatility;
-	double d1 = (std::log(S / K) + (r + 0.5 * v * v) * T) / (v * std::sqrt(T));
-	if (option->GetOptionType() == EuropeanVanillaOption::call) {
-		return N(d1);
+	
+	if (vanilla){
+		double d1 = (std::log(asset_price / vanilla->getStrike()) + (interest_rate + 0.5 * volatility * volatility) * vanilla->getExpiry()) / (volatility * std::sqrt(vanilla->getExpiry()));
+		if (vanilla->GetOptionType() == EuropeanVanillaOption::call) {
+			return N(d1);
+		}
+		else {
+			return N(d1) - 1.0;
+		}
 	}
-	else if (option->GetOptionType() == EuropeanVanillaOption::put) {
-		return N(d1) - 1.0;
+	else if (digital){
+		double d2 = (std::log(asset_price / digital->getStrike()) + (interest_rate + 0.5 * volatility * volatility) * digital->getExpiry()) / (volatility * std::sqrt(digital->getExpiry())) - volatility * std::sqrt(digital->getExpiry());
+		double n_pdf = (1 / std::sqrt(2 * M_PI)) * std::exp(-d2*d2 / 2);
+		double a = std::exp(-interest_rate * digital->getExpiry()) * n_pdf / (asset_price * volatility * std::sqrt(digital->getExpiry()));
+
+		if (digital->GetOptionType() == EuropeanDigitalOption::call)
+			return a;
+		else
+			return -a;
 	}
 	else {
 		throw std::invalid_argument("Unknown option type.");

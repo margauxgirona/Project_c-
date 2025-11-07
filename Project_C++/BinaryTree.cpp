@@ -45,3 +45,4 @@ void BinaryTree<T>::display() const{
 // ====== Explicit instantiations ======
 template class BinaryTree<double>;
 template class BinaryTree<bool>;
+template class BinaryTree<int>;
