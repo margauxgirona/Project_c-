@@ -45,6 +45,7 @@ int main() {
             std::cout << "CRR pricer explicit formula price=" << crr_pricer2(true) << std::endl;
         }
         std::cout << std::endl << "*********************************************************" << std::endl;
+
     }
 /*
     {
