@@ -3,6 +3,7 @@
 #define OPTION_H
 
 #include <iostream>
+#include <vector>
 class Option
 {
 private:
