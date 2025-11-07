@@ -46,7 +46,7 @@ int main() {
         }
         std::cout << std::endl << "*********************************************************" << std::endl;
     }
-
+/*
     {
         std::cout << "Binary Tree" << std::endl << std::endl;
         BinaryTree<bool> t1;
@@ -117,4 +117,5 @@ int main() {
         }
         std::cout << std::endl << "*********************************************************" << std::endl;
     }
+    */
 }

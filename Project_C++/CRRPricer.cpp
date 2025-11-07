@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath> 
 #include "CRRPricer.h"
 
 CRRPricer::CRRPricer(Option * option, int depth, double asset_price, double up, double down, double interest_rate) :
@@ -68,7 +69,7 @@ void CRRPricer::compute(){
                 // Valeur de continuation
                 double continuation = (q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i)) / (1 + _r);
 
-                // Valeur d'exercice immédiat
+                // Valeur d'exercice immï¿½diat
                 double immediate = _option->payoff(_S.getNode(n, i));
 
                 if (immediate > continuation) {
