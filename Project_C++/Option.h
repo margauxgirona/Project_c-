@@ -8,29 +8,23 @@ class Option
 {
 private:
 	double _expiry;
+
 public:
-	Option(double expiry) : _expiry(expiry) {}
 
-	double getExpiry() const {
-		return _expiry;
-	}
+	Option(double expiry);
+
+	double getExpiry() const;
+
 	virtual double payoff(double S) const = 0;
-	virtual double payoffPath(const std::vector<double>& spots) const
-	{
-		if (spots.empty()) {
-			return 0.0;
-		}
-		return payoff(spots.back());
-	}
-
-	virtual bool isAsianOption() const { return false; }
-
-
-	virtual ~Option() {}
-
-	//Ajout MF
+	virtual double payoffPath(const std::vector<double>& spots) const;
+	virtual bool isAsianOption() const;
 	virtual bool isAmericanOption();
 
+
+	virtual ~Option();
+
+	
+	
 };
 #endif // !OPTION_H
 
