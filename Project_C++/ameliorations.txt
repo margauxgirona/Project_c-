@@ -1,3 +1,6 @@
 - Bien séparer .h et .cpp (classe Option, AsianCallOption, AsianOption, AsianPutOption, BlackScholesPricer.H, CallOption, CRRPricer, MT.h, PutOption.h)
 - BlackScholesPricer n'est pas une classe friend de EuropeanVanillaOption, comme demandé dans l'énoncé. Il faut la faire passer friend et ne plus passer par les getters dans BlackScholesPricer.cpp pour les attributs de vanilla.
--  
+
+- Rendre plus beau l'affichage des BinnaryTree
+
+- Remplir l'Excel avec nos résultats et comparer avec les autres.-  
