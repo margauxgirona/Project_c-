@@ -6,10 +6,7 @@ class AsianCallOption : public AsianOption {
 private:
     double _strike;
 public:
-    AsianCallOption(double expiry, double strike, const std::vector<double>& timeSteps)
-        : AsianOption(expiry, timeSteps), _strike(strike) {}
+    AsianCallOption(double expiry, double strike, const std::vector<double>& timeSteps);
 
-    double payoff(double S) const override {
-        return std::max(S - _strike, 0.0);
-    }
+    double payoff(double S) const override;
 };
