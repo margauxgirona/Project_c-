@@ -11,7 +11,7 @@
 int main() {
     {
 
-        double S0(95.), K(100.), T(0.5), r(0.02), sigma(0.2);
+        double S0(100.), K(101.), T(5), r(0.01), sigma(0.1);
         CallOption opt1(T, K);
         PutOption opt2(T, K);
 
@@ -26,19 +26,22 @@ int main() {
             std::cout << "BlackScholesPricer price=" << pricer2() << ", delta=" << pricer2.delta() << std::endl;
             std::cout << std::endl;
 
-            int N(150);
-            double U = exp(sigma * sqrt(T / N)) - 1.0;
+            int N(5);
+            /*double U = exp(sigma * sqrt(T / N)) - 1.0;
+            std::cout << U << std::endl;
             double D = exp(-sigma * sqrt(T / N)) - 1.0;
+            std::cout << D << std::endl;
             double R = exp(r * T / N) - 1.0;
+            std::cout << R << std::endl;*/
 
-            CRRPricer crr_pricer1(&opt1, N, S0, U, D, R);
+            CRRPricer crr_pricer1(&opt1, N, S0, 0.05, -0.045, 0.01);
             std::cout << "Calling CRR pricer with depth=" << N << std::endl;
             std::cout << std::endl;
             std::cout << "CRR pricer computed price=" << crr_pricer1() << std::endl;
             std::cout << "CRR pricer explicit formula price=" << crr_pricer1(true) << std::endl;
             std::cout << std::endl;
 
-            CRRPricer crr_pricer2(&opt2, N, S0, U, D, R);
+            CRRPricer crr_pricer2(&opt2, N, S0, 0.05, -0.045, 0.01);
             std::cout << "Calling CRR pricer with depth=" << N << std::endl;
             std::cout << std::endl;
             std::cout << "CRR pricer computed price=" << crr_pricer2() << std::endl;
@@ -83,7 +86,7 @@ int main() {
 
     {
 
-        double S0(95.), K(100.), T(0.5), r(0.02), sigma(0.2);
+        double S0(100.), K(101.), T(5.), r(0.01), sigma(0.1);
         EuropeanDigitalCallOption opt1(T, K);
         EuropeanDigitalPutOption opt2(T, K);
 
@@ -98,19 +101,19 @@ int main() {
             std::cout << "BlackScholesPricer price=" << pricer2() << ", delta=" << pricer2.delta() << std::endl;
             std::cout << std::endl;
 
-            int N(150);
-            double U = exp(sigma * sqrt(T / N)) - 1.0;
-            double D = exp(-sigma * sqrt(T / N)) - 1.0;
-            double R = exp(r * T / N) - 1.0;
+            int N(5);
+            //double U = exp(sigma * sqrt(T / N)) - 1.0;
+            //double D = exp(-sigma * sqrt(T / N)) - 1.0;
+            //double R = exp(r * T / N) - 1.0;
 
-            CRRPricer crr_pricer1(&opt1, N, S0, U, D, R);
+            CRRPricer crr_pricer1(&opt1, N, S0, 0.05, -0.045, 0.01);
             std::cout << "Calling CRR pricer with depth=" << N << std::endl;
             std::cout << std::endl;
             std::cout << "CRR pricer computed price=" << crr_pricer1() << std::endl;
             std::cout << "CRR pricer explicit formula price=" << crr_pricer1(true) << std::endl;
             std::cout << std::endl;
 
-            CRRPricer crr_pricer2(&opt2, N, S0, U, D, R);
+            CRRPricer crr_pricer2(&opt2, N, S0, 0.05, -0.045, 0.01);
             std::cout << "Calling CRR pricer with depth=" << N << std::endl;
             std::cout << std::endl;
             std::cout << "CRR pricer computed price=" << crr_pricer2() << std::endl;

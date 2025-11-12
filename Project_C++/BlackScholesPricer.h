@@ -18,7 +18,7 @@ private:
 
 	//Fonction auxiliaire
 	double N(double x) const {
-		return 0.5 * erfc(-x * sqrt(2.0));
+		return 0.5 * erfc(-x /sqrt(2.0));
 	}
 
 public:

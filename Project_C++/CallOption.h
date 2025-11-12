@@ -9,9 +9,7 @@ class CallOption : public EuropeanVanillaOption {
 public :
 	CallOption(double expiry, double strike) : EuropeanVanillaOption(expiry, strike) {}
 
-	double payoff(double S) const override {
-		return std::max(S - getStrike(), 0.0);
-	}
+	double payoff(double S) const override;
 
 	optionType GetOptionType() const override {
 		return optionType::call;

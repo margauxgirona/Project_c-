@@ -1,7 +1,12 @@
-﻿#include "BlackScholesMCPricer.h"
+#include "BlackScholesMCPricer.h"
 #include "AsianOption.h"
 #include <cmath>
 #include <stdexcept>
+
+
+BlackScholesMCPricer::BlackScholesMCPricer(Option* opt, double s0, double r, double sigma) : 
+		option(opt), initial_price(s0), interest_rate(r), volatility(sigma),
+		nbPaths(0), estimate(0.0),var(0.0) {}
 
 
 int BlackScholesMCPricer::getNbPaths() const {
