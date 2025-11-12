@@ -33,19 +33,22 @@ void BlackScholesMCPricer::generate(int nb_paths) {
 				t_previous = t;
 			}
 		}
-		else {
-			double Z = MT::rand_norm();  // nombre aléatoire N(0,1)
-			double T = option->getExpiry();   //Temps final (expiration) de l'option
-			double ST = initial_price * std::exp((interest_rate - 0.5 * volatility * volatility) * T
-				+ volatility * std::sqrt(T) * Z);
-			path.push_back(ST);
-		}
-		double payoff = option->payoffPath(path);
-		double discounted = std::exp(-interest_rate * option->getExpiry()) * payoff;
-		nbPaths++;
-		double delta = discounted - estimate;   //Différence entre le nouveau payoff et la moyenne actuelle
-		estimate += delta / nbPaths;
-		var += delta * (discounted - estimate);
+	else {
+		double Z = MT::rand_norm();  // nombre aléatoire N(0,1)
+		double T = option->getExpiry();   //Temps final (expiration) de l'option
+		double ST = initial_price * std::exp((interest_rate - 0.5 * volatility * volatility) * T
+			+ volatility * std::sqrt(T) * Z);
+		path.push_back(ST);
+	}
+	double payoff = option->payoffPath(path);
+	//double discounted = std::exp(-interest_rate * option->getExpiry()) * payoff;
+	double discounted = std::exp(-interest_rate * (option->isAsianOption() 
+        ? static_cast<AsianOption*>(option)->getTimeSteps().back() 
+        : option->getExpiry())) * payoff;
+	nbPaths++;
+	double delta = discounted - estimate;   //Différence entre le nouveau payoff et la moyenne actuelle
+	estimate += delta / nbPaths;
+	var += delta * (discounted - estimate);
 	}
 }
 

@@ -7,7 +7,7 @@ private:
     double _strike;
 
 public:
-    AsianPutOption(double expiry, double strike, const std::vector<double>& timeSteps);
+    AsianPutOption(const std::vector<double>& timeSteps, double strike);
 
     double payoff(double S) const override;
 };

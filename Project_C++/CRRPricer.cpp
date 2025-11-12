@@ -51,6 +51,7 @@ void CRRPricer::compute(){
     for(int n = 0; n <= _depth; n++){
         for(int i = 0; i <= n; i++){
             _S.setNode(n, i, _S0 * intPow(1 + _u, i) * intPow(1 + _d, n-i));
+            
         }
     }
     // at expiracy date (at N = _depth)

@@ -1,4 +1,90 @@
 #include <iostream>
+#include <vector>
+#include "CallOption.h"
+#include "PutOption.h"
+#include "EuropeanDigitalCallOption.h"
+#include "EuropeanDigitalPutOption.h"
+#include "AmericanCallOption.h"
+#include "AmericanPutOption.h"
+#include "CRRPricer.h"
+
+
+int main() {
+    double S0(100.), K(101.), T(5.), r(0.01), sigma(0.1);
+    std::vector<Option*> opt_ptrs;
+    opt_ptrs.push_back(new CallOption(T, K));
+    opt_ptrs.push_back(new PutOption(T, K));
+    opt_ptrs.push_back(new EuropeanDigitalCallOption(T, K));
+    opt_ptrs.push_back(new EuropeanDigitalPutOption(T, K));
+    opt_ptrs.push_back(new AmericanCallOption(T, K));
+    opt_ptrs.push_back(new AmericanPutOption(T, K));
+
+    CRRPricer* pricer;
+
+    for (auto& opt_ptr : opt_ptrs) {
+        pricer = new CRRPricer(opt_ptr, 5, S0, r, sigma);
+
+        pricer->compute();
+
+        std::cout << "price: " << (*pricer)() << std::endl << std::endl;
+        delete pricer;
+        delete opt_ptr;
+
+    }
+}
+
+
+// test2
+/*
+
+#include <iostream>
+#include <vector>
+#include "CallOption.h"
+#include "PutOption.h"
+#include "EuropeanDigitalCallOption.h"
+#include "EuropeanDigitalPutOption.h"
+#include "AsianCallOption.h"
+#include "AsianPutOption.h"
+#include "BlackScholesMCPricer.h"
+
+int main() {
+    double S0(100.), K(101.), T(5.), r(0.01), sigma(0.1);
+    std::vector<Option*> opt_ptrs;
+    opt_ptrs.push_back(new CallOption(T, K));
+    opt_ptrs.push_back(new PutOption(T, K));
+    opt_ptrs.push_back(new EuropeanDigitalCallOption(T, K));
+    opt_ptrs.push_back(new EuropeanDigitalPutOption(T, K));
+
+    std::vector<double> fixing_dates;
+    int m = 60; // 60 mois
+    for (int i = 1; i <= m; ++i) fixing_dates.push_back(5.0 * i / m);
+    opt_ptrs.push_back(new AsianCallOption(fixing_dates, K));
+    opt_ptrs.push_back(new AsianPutOption(fixing_dates, K));
+
+    std::vector<double> ci;
+    BlackScholesMCPricer* pricer;
+
+    for (auto& opt_ptr : opt_ptrs) {
+        pricer = new BlackScholesMCPricer(opt_ptr, S0, r, sigma);
+        do {
+            pricer->generate(10);
+            ci = pricer->confidenceInterval();
+        } while (ci[1] - ci[0] > 1e-2);
+        std::cout << "nb samples: " << pricer->getNbPaths() << std::endl;
+        std::cout << "price: " << (*pricer)() << std::endl << std::endl;
+        delete pricer;
+        delete opt_ptr;
+    }
+}
+*/
+
+
+
+
+//test1
+/* 
+
+#include <iostream>
 #include "CallOption.h"
 #include "PutOption.h"
 #include "EuropeanDigitalCallOption.h"
@@ -6,7 +92,6 @@
 #include "BlackScholesPricer.h"
 #include "CRRPricer.h"
 #include "BinaryTree.h"
-
 
 int main() {
     {
@@ -27,12 +112,9 @@ int main() {
             std::cout << std::endl;
 
             int N(5);
-            /*double U = exp(sigma * sqrt(T / N)) - 1.0;
-            std::cout << U << std::endl;
-            double D = exp(-sigma * sqrt(T / N)) - 1.0;
-            std::cout << D << std::endl;
-            double R = exp(r * T / N) - 1.0;
-            std::cout << R << std::endl;*/
+            //double U = exp(sigma * sqrt(T / N)) - 1.0;
+            //double D = exp(-sigma * sqrt(T / N)) - 1.0;
+            //double R = exp(r * T / N) - 1.0;
 
             CRRPricer crr_pricer1(&opt1, N, S0, 0.05, -0.045, 0.01);
             std::cout << "Calling CRR pricer with depth=" << N << std::endl;
@@ -121,4 +203,4 @@ int main() {
         }
         std::cout << std::endl << "*********************************************************" << std::endl;
     }
-}
+}*/

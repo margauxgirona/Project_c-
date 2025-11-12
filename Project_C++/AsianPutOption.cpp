@@ -2,8 +2,8 @@
 #include <algorithm> 
 #include <vector>    
 
-AsianPutOption::AsianPutOption(double expiry, double strike, const std::vector<double>& timeSteps)
-    : AsianOption(expiry, timeSteps), _strike(strike) {
+AsianPutOption::AsianPutOption(const std::vector<double>& timeSteps, double strike)
+    : AsianOption(timeSteps), _strike(strike) {
 }
 
 double AsianPutOption::payoff(double S) const {

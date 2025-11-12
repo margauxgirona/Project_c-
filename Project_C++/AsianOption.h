@@ -8,7 +8,7 @@ private:
     std::vector<double> _timeSteps;
 
 public:
-    AsianOption(double expiry, const std::vector<double>& timeSteps);
+    AsianOption(const std::vector<double>& timeSteps);
 
     std::vector<double> getTimeSteps() const;
 

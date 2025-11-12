@@ -2,8 +2,8 @@
 #include <algorithm> 
 #include <vector>
 
-AsianCallOption::AsianCallOption(double expiry, double strike, const std::vector<double>& timeSteps)
-    : AsianOption(expiry, timeSteps), _strike(strike) {
+AsianCallOption::AsianCallOption(const std::vector<double>& timeSteps, double strike)
+    : AsianOption(timeSteps), _strike(strike) {
 }
 
 double AsianCallOption::payoff(double S) const {

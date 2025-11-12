@@ -1,8 +1,8 @@
 #include "AsianOption.h"
 #include <stdexcept> 
 
-AsianOption::AsianOption(double expiry, const std::vector<double>& timeSteps)
-    : Option(expiry), _timeSteps(timeSteps) {
+AsianOption::AsianOption(const std::vector<double>& timeSteps)
+    : Option(timeSteps.back()), _timeSteps(timeSteps) {
     if (timeSteps.empty()) throw std::invalid_argument("Empty time steps");
 }
 
