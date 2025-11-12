@@ -16,9 +16,7 @@ private:
 	double var;
 
 public:
-	BlackScholesMCPricer(Option* opt, double s0, double r, double sigma) : 
-		option(opt), initial_price(s0), interest_rate(r), volatility(sigma),
-		nbPaths(0), estimate(0.0),var(0.0) {}
+	BlackScholesMCPricer(Option* opt, double s0, double r, double sigma);
 
 	int getNbPaths() const;
 
