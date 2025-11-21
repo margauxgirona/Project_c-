@@ -7,11 +7,11 @@ CRRPricer::CRRPricer(Option * option, int depth, double asset_price, double up, 
         // check for arbitrage
         if (!(down < interest_rate && interest_rate < up))
             throw std::invalid_argument("Arbitrage condition is not respected, we must have : D < R < U.");
+        else if (option->isAsianOption())
+            throw std::invalid_argument("Is Asian option");
 
-        // trees initialisation
         _S.setDepth(depth);
         _H.setDepth(depth);
-//Ajout MF
         _Exercise.setDepth(depth);
 
         _computed = false;

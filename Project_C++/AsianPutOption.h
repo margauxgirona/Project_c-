@@ -9,6 +9,6 @@ private:
 public:
     AsianPutOption(const std::vector<double>& timeSteps, double strike);
 
-    double payoff(double S) const override;
+    double payoff(double S_mean) const override;
 };
 

@@ -1,9 +1,10 @@
+#pragma once
 #ifndef BINARY_TREE_H
 #define BINARY_TREE_H
 
 #include <iostream>
 #include <vector>
-#include <cstddef>   // std::size_t
+#include <cstddef>   
 
 template<typename T>
 class BinaryTree{

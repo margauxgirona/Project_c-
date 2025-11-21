@@ -6,6 +6,6 @@ AsianCallOption::AsianCallOption(const std::vector<double>& timeSteps, double st
     : AsianOption(timeSteps), _strike(strike) {
 }
 
-double AsianCallOption::payoff(double S) const {
-    return std::max(S - _strike, 0.0);
+double AsianCallOption::payoff(double S_mean) const {
+    return std::max(S_mean - _strike, 0.0);
 }

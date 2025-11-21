@@ -19,7 +19,7 @@ public:
 
     virtual double payoff(double S) const = 0;
 
-    virtual ~EuropeanDigitalOption() = default;
+    virtual ~EuropeanDigitalOption() = default; 
 };
 
 #endif

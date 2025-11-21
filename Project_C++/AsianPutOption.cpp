@@ -6,6 +6,6 @@ AsianPutOption::AsianPutOption(const std::vector<double>& timeSteps, double stri
     : AsianOption(timeSteps), _strike(strike) {
 }
 
-double AsianPutOption::payoff(double S) const {
-    return std::max(_strike - S, 0.0);
+double AsianPutOption::payoff(double S_mean) const {
+    return std::max(_strike - S_mean, 0.0);
 }

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CRRPRICER_H
 #define CRRPRICER_H
 
@@ -7,6 +8,7 @@
 #include "PutOption.h"
 #include "CallOption.h"
 #include "BinaryTree.h"
+#include "AsianOption.h"
 
 class CRRPricer{
     private:
@@ -17,12 +19,13 @@ class CRRPricer{
         double _d;
         double _r;
 
+        // tree of prices of the underlying asset
         BinaryTree<double> _S;
+        // tree of prices of the option
         BinaryTree<double> _H;
-//Ajout MF
+        // boolean tree of early exercises
         BinaryTree<bool> _Exercise;
 
-        
         bool _computed;
     
     public:
