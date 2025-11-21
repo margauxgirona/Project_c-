@@ -1,0 +1,14 @@
+- demander pour création de fonction
+- BlackScholesPrices creation d'une fonction N
+- gestion/protection des inputs/erreur
+- vérification du delta
+- attente de faire mieux pour l'affichage
+- ifndef ou pragma once ?
+- private members of CRRPricer
+- CRRPricer : tree structure, est ce que ça correspond bien aux attributs _H et _S ?
+- CRRPricer = intpow ?
+- check les destructeurs => EuropeanDigitalOption.h
+- constructeur de asianoption comment initialiser expiry
+
+- get_H, get_S => CRRPricer ??
+- dans la fonction mere AsianOption on fait appelle a un payoff qui n'est pas encore surchargé, comment est ce que ça fonctionne ?
