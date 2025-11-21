@@ -10,7 +10,7 @@
 
 
 int main() {
-    double S0(100.), K(101.), T(5.), r(0.01), sigma(0.1);
+    double S0(100.), K(101.), T(5.);
     std::vector<Option*> opt_ptrs;
     opt_ptrs.push_back(new CallOption(T, K));
     opt_ptrs.push_back(new PutOption(T, K));
@@ -22,7 +22,7 @@ int main() {
     CRRPricer* pricer;
 
     for (auto& opt_ptr : opt_ptrs) {
-        pricer = new CRRPricer(opt_ptr, 5, S0, r, sigma);
+        pricer = new CRRPricer(opt_ptr, 5, S0, 0.05, -0.045, 0.01 );
 
         pricer->compute();
 
