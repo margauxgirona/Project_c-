@@ -3,9 +3,9 @@
 #include "PutOption.h"
 #include <cmath>
 
-BlackScholesPricer::BlackScholesPricer(EuropeanVanillaOption* o, double a, double i, double v) : vanilla(o), asset_price(a), interest_rate(i), volatility(v) {}
+BlackScholesPricer::BlackScholesPricer(EuropeanVanillaOption* option, double asset_price, double interest_rate, double volatility): vanilla(option), asset_price(asset_price), interest_rate(interest_rate), volatility(volatility) {}
 
-BlackScholesPricer::BlackScholesPricer(EuropeanDigitalOption* o, double a, double i, double v) : digital(o), asset_price(a), interest_rate(i), volatility(v) {}
+BlackScholesPricer::BlackScholesPricer(EuropeanDigitalOption* option, double asset_price, double interest_rate, double volatility) : digital(option), asset_price(asset_price), interest_rate(interest_rate), volatility(volatility) {}
 
 
 //calcul du prix

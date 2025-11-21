@@ -2,7 +2,6 @@
 #ifndef EUROPEANDIGITALCALLOPTION_H
 #define EUROPEANDIGITALCALLOPTION_H
 
-#pragma once
 #include "EuropeanDigitalOption.h"
 #include <algorithm>
 

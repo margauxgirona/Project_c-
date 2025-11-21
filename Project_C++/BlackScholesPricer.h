@@ -22,9 +22,9 @@ private:
 	}
 
 public:
-	BlackScholesPricer(EuropeanVanillaOption* o, double a, double i, double v);
+	BlackScholesPricer(EuropeanVanillaOption* option, double asset_price, double interest_rate, double volatility);
 	
-	BlackScholesPricer(EuropeanDigitalOption* o, double a, double i, double v);
+	BlackScholesPricer(EuropeanDigitalOption* option, double asset_price, double interest_rate, double volatility);
 
 	//prix
 	double operator()() const;

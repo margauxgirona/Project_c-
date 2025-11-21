@@ -7,25 +7,24 @@
 
 class BlackScholesPricer;
 
-class EuropeanVanillaOption : public Option
-{
-private:
-	double _strike;
+class EuropeanVanillaOption : public Option {
+	private:
+		double _strike;
 
-public:
-	enum optionType
-	{
-		call,
-		put
-	};
-	EuropeanVanillaOption(double expiry, double strike);
+	public:
+		enum optionType
+		{
+			call,
+			put
+		};
+		EuropeanVanillaOption(double expiry, double strike);
 
-	double getStrike() const;
-	virtual optionType GetOptionType() const = 0;
+		double getStrike() const;
+		virtual optionType GetOptionType() const = 0;
 
-	friend class BlackScholesPricer;
+		friend class BlackScholesPricer;
 
-	virtual ~EuropeanVanillaOption() {}
+		virtual ~EuropeanVanillaOption() {}
 };
 
 #endif // !EUROPEANVANILLAOPTION.h

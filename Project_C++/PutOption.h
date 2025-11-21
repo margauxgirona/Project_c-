@@ -7,15 +7,12 @@
 
 class PutOption : public EuropeanVanillaOption {
 public :
-	PutOption(double expiry, double strike) : EuropeanVanillaOption(expiry, strike) {}
+	PutOption(double expiry, double strike);
 
-	double payoff(double S) const override {
-		return std::max(getStrike() - S, 0.0);
-	}
+	double payoff(double S) const override;
 
-	optionType GetOptionType() const override {
-		return optionType::put;
-	}
+	optionType GetOptionType() const override;
+
 };
 #endif // !PUTOPTION_H
 
