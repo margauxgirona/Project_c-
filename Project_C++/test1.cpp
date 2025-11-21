@@ -8,7 +8,7 @@
 #include "AmericanPutOption.h"
 #include "CRRPricer.h"
 
-
+/*
 int main() {
     double S0(100.), K(101.), T(5.);
     std::vector<Option*> opt_ptrs;
@@ -32,7 +32,7 @@ int main() {
 
     }
 }
-
+*/
 
 // test2
 /*
@@ -82,7 +82,7 @@ int main() {
 
 
 //test1
-/* 
+
 
 #include <iostream>
 #include "CallOption.h"
@@ -203,4 +203,4 @@ int main() {
         }
         std::cout << std::endl << "*********************************************************" << std::endl;
     }
-}*/
+}
