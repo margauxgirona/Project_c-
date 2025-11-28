@@ -12,3 +12,11 @@
 
 - get_H, get_S => CRRPricer ??
 - dans la fonction mere AsianOption on fait appelle a un payoff qui n'est pas encore surchargé, comment est ce que ça fonctionne ?
+
+- is asian dans le constructeur surchargé de CRRPricer
+- MT.cpp importation loi normale / loi uniforme
+- only one instance of MT in all the program
+-generate plusieurs fois, on remet tout à 0 ?
+
+A FAIRE:
+- regrouper CRRPricer => regrouper american et normal : mettre le if dans le double boucle for
