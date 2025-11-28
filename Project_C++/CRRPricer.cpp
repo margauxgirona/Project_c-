@@ -29,7 +29,9 @@ _option(option), _depth(depth), _S0(asset_price), _r(r){
 
     if (!(_d < _r && _r < _u))
         throw std::invalid_argument("Arbitrage condition not respected (D < R < U)");
-
+    else if (option->isAsianOption())
+            throw std::invalid_argument("Is Asian option");
+    
     _S.setDepth(depth);
     _H.setDepth(depth);
     _Exercise.setDepth(depth);  
@@ -70,11 +72,11 @@ void CRRPricer::compute(){
                 // Valeur de continuation
                 double continuation = (q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i)) / (1 + _r);
 
-                // Valeur d'exercice imm�diat
-                double immediate = _option->payoff(_S.getNode(n, i));
+                // Valeur d'exercice immediat
+                double intrinsic = _option->payoff(_S.getNode(n, i));
 
-                if (immediate > continuation) {
-                    _H.setNode(n, i, immediate);
+                if (intrinsic >= continuation) {
+                    _H.setNode(n, i, intrinsic);
                     _Exercise.setNode(n, i, true);}
                 else {
                     _H.setNode(n, i, continuation);
@@ -102,6 +104,10 @@ double CRRPricer::get(int n, int i) const {
         throw std::out_of_range("CRRPricer::get indices out of range");
     return _H.getNode(n, i);
 }
+
+bool CRRPricer::getExercise(int n, int i) const {
+            return _Exercise.getNode(n, i);
+        }
 
 static long double factorial(int n) {
     long double res = 1.0;

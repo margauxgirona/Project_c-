@@ -12,7 +12,7 @@ private:
 public:
 	AmericanOption(double expiry, double strike);
 
-	bool isAmericanOption() override;
+	bool isAmericanOption() const override;
 
 	double getStrike() const;
 

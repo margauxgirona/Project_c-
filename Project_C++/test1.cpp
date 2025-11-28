@@ -32,10 +32,10 @@ int main() {
 
     }
 }
-*/
 
+*/
 // test2
-/*
+
 
 #include <iostream>
 #include <vector>
@@ -76,14 +76,14 @@ int main() {
         delete opt_ptr;
     }
 }
-*/
+
 
 
 
 
 //test1
 
-
+/*
 #include <iostream>
 #include "CallOption.h"
 #include "PutOption.h"
@@ -204,3 +204,4 @@ int main() {
         std::cout << std::endl << "*********************************************************" << std::endl;
     }
 }
+*/

@@ -19,7 +19,7 @@ bool Option::isAsianOption() const {
 	return false; 
 }
 
-bool Option:: isAmericanOption() {
+bool Option:: isAmericanOption() const {
 	return false;
 }
 

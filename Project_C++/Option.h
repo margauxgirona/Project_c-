@@ -18,7 +18,7 @@ public:
 	virtual double payoff(double S) const = 0;
 	virtual double payoffPath(const std::vector<double>& spots) const;
 	virtual bool isAsianOption() const;
-	virtual bool isAmericanOption();
+	virtual bool isAmericanOption() const;
 
 
 	virtual ~Option();

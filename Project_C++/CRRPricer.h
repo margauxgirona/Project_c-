@@ -30,23 +30,19 @@ class CRRPricer{
     
     public:
         CRRPricer(Option * option, int depth, double asset_price, double up, double down, double interest_rate);
-
-        //Ajout MF
+        
         CRRPricer(Option* option, int depth, double asset_price, double r, double volatility);
 
         double intPow(double a, int exponent) const;
         void compute();
 
         double get(int n, int i) const;
+        bool getExercise(int n, int i) const;
 
         double operator()(bool closed_form = false);
 
         BinaryTree<double> get_S() const {return _S; }
         BinaryTree<double> get_H() const {return _H; }
-//Ajout MF
-        bool getExercise(int n, int i) const {
-            return _Exercise.getNode(n, i);
-        }
 };
 
 #endif
