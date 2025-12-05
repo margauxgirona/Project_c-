@@ -65,7 +65,7 @@ double BlackScholesMCPricer::operator() () const {
 	if (nbPaths == 0) {
 		throw std::runtime_error("Aucune trajectoire n'a encore été générée.");
 	}
-	return sumPayoff / nbPaths;  \\moyenne
+	return sumPayoff / nbPaths;  //moyenne
 }
 
 
@@ -79,6 +79,7 @@ std::vector<double> BlackScholesMCPricer::confidenceInterval() const {
     double margin = 1.96 * std_error;
     return { mean - margin, mean + margin };
 }
+
 
 
 
