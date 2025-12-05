@@ -1,7 +1,7 @@
-MT 
+MT - JEREMY
 - créer 2 paraètres globaux pour les loi spour ne pas les recréer à chaque fois
 
-CRRPricer
+CRRPricer NATACHA - MATHIS
 - enlever S_ => calculer chaque instance au moment où on en a besoin
 - boucler une seule fois
 - enlever la fonction intPow
@@ -9,7 +9,7 @@ CRRPricer
 - optimiser les histoires de boucles
 - regrouper CRRPricer => regrouper american et normal : mettre le if dans le double boucle for
 
-BSMTPricer
+BSMTPricer CASSANDRE
 - pas de push back => réserver directement la taille qu'on connait
 - path réinitialisé à chaque fois car dans la boucle for (pas bien)
 - variance à recalculer (test à la main)
