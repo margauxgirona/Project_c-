@@ -41,6 +41,7 @@ _option(option), _depth(depth), _S0(asset_price), _r(r){
 
 // function created to replace std::pow()
 // because std::pow() is generic and computationnally expensive 
+//On peut faire mieux, référence
 double CRRPricer::intPow(double a, int exponent) const{
     double result = 1.0;
     for(int i = 0; i < exponent; i++)
@@ -50,13 +51,14 @@ double CRRPricer::intPow(double a, int exponent) const{
 
 void CRRPricer::compute(){
     // fill the _stockTree with the prices
+    //Boucler une seule fois
     for(int n = 0; n <= _depth; n++){
         for(int i = 0; i <= n; i++){
             _S.setNode(n, i, _S0 * intPow(1 + _u, i) * intPow(1 + _d, n-i));
             
         }
     }
-    // at expiracy date (at N = _depth)
+    // at expiracy date (at N = _depth), fair etout en une seule boucle
     for(int i = 0; i <= _depth; i++){
         _H.setNode(_depth, i, _option->payoff(_S.getNode(_depth, i)));
     }
@@ -115,6 +117,8 @@ static long double factorial(int n) {
         res *= i;
     return res;
 }
+
+//Optimiser factorielle, triangle de Pascal
 
 double CRRPricer::operator()(bool closed_form) {
     if (!(_computed))

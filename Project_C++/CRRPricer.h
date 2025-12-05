@@ -19,7 +19,7 @@ class CRRPricer{
         double _d;
         double _r;
 
-        // tree of prices of the underlying asset
+        // tree of prices of the underlying asset, sert à rien
         BinaryTree<double> _S;
         // tree of prices of the option
         BinaryTree<double> _H;

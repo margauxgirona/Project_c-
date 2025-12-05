@@ -21,7 +21,7 @@ public:
 	virtual bool isAmericanOption() const;
 
 
-	virtual ~Option();
+	virtual ~Option(); //Enlever si pas indispensable
 
 	
 	
