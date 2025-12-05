@@ -13,47 +13,49 @@ int BlackScholesMCPricer::getNbPaths() const {
 	return nbPaths;
 }
 
+
 void BlackScholesMCPricer::generate(int nb_paths) {
     if (nb_paths <= 0) {
         throw std::invalid_argument("Le nombre de trajectoires doit être un entier positif.");
     }
+
     std::vector<double> path; 
     int nSteps = 0;
-
+    std::vector<double> timeSteps; // pour AsianOption
+	
+    AsianOption* asian = nullptr;
     if (option->isAsianOption()) {
-        AsianOption* asian = static_cast<AsianOption*>(option);
-        nSteps = asian->getTimeSteps().size();
-        path.resize(nSteps);   // allocation unique
-    }
-    else {
+        asian = static_cast<AsianOption*>(option);
+        timeSteps = asian->getTimeSteps();
+        nSteps = timeSteps.size();
+        path.resize(nSteps);
+    } else {
         nSteps = 1;
-        path.resize(1);        // allocation pour vanilla
+        path.resize(1);
     }
+    // Boucle sur toutes les trajectoires
     for (int i = 0; i < nb_paths; i++) {
-        if (option->isAsianOption()) {
-            AsianOption* asian = static_cast<AsianOption*>(option);
-            auto timeSteps = asian->getTimeSteps();
+        if (asian) {
             double S = initial_price;
             double t_previous = 0.0;
-
             for (int k = 0; k < nSteps; k++) {
-                double t = timeSteps[k];
-                double dt = t - t_previous;
+                double dt = timeSteps[k] - t_previous;
                 double Z = MT::rand_norm();
                 S *= std::exp((interest_rate - 0.5 * volatility * volatility) * dt
-                    + volatility * std::sqrt(dt) * Z);
+                              + volatility * std::sqrt(dt) * Z);
                 path[k] = S;
-                t_previous = t;
+                t_previous = timeSteps[k];
             }
-        }
-        else {
+        } else { // option vanilla
             double Z = MT::rand_norm();
             double ST = initial_price * std::exp((interest_rate - 0.5 * volatility * volatility) * option->getExpiry()
-                + volatility * std::sqrt(option->getExpiry()) * Z);
+                                                 + volatility * std::sqrt(option->getExpiry()) * Z);
             path[0] = ST;
         }
+
         double payoff = option->payoffPath(path);
         double discounted = std::exp(-interest_rate * option->getExpiry()) * payoff;
+
         nbPaths++;
         sumPayoff += discounted;
         sumPayoff_Square += discounted * discounted;
@@ -79,6 +81,7 @@ std::vector<double> BlackScholesMCPricer::confidenceInterval() const {
     double margin = 1.96 * std_error;
     return { mean - margin, mean + margin };
 }
+
 
 
 
