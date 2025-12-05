@@ -1,22 +1,19 @@
-- demander pour création de fonction
-- BlackScholesPrices creation d'une fonction N
-- gestion/protection des inputs/erreur
-- vérification du delta
-- attente de faire mieux pour l'affichage
-- ifndef ou pragma once ?
-- private members of CRRPricer
-- CRRPricer : tree structure, est ce que ça correspond bien aux attributs _H et _S ?
-- CRRPricer = intpow ?
-- check les destructeurs => EuropeanDigitalOption.h
-- constructeur de asianoption comment initialiser expiry
+MT 
+- créer 2 paraètres globaux pour les loi spour ne pas les recréer à chaque fois
 
-- get_H, get_S => CRRPricer ??
-- dans la fonction mere AsianOption on fait appelle a un payoff qui n'est pas encore surchargé, comment est ce que ça fonctionne ?
+CRRPricer
+- enlever S_ => calculer chaque instance au moment où on en a besoin
+- boucler une seule fois
+- enlever la fonction intPow
+- pas besoin de factoriel (factoriel i est relié à factoriel i-1 => juste garder la denière valeur en commençant pas facto = 1)
+- optimiser les histoires de boucles
+- regrouper CRRPricer => regrouper american et normal : mettre le if dans le double boucle for
 
-- is asian dans le constructeur surchargé de CRRPricer
-- MT.cpp importation loi normale / loi uniforme
-- only one instance of MT in all the program
--generate plusieurs fois, on remet tout à 0 ?
+BSMTPricer
+- pas de push back => réserver directement la taille qu'on connait
+- path réinitialisé à chaque fois car dans la boucle for (pas bien)
+- variance à recalculer (test à la main)
+  - ajouter 2 atributs privés somme des payoffs² et somme des payoofs pour le calcul de la variance
 
 A FAIRE:
-- regrouper CRRPricer => regrouper american et normal : mettre le if dans le double boucle for
+- get_H, get_S => CRRPricer ??
