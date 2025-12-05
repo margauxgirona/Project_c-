@@ -12,8 +12,8 @@ private:
 	double interest_rate; //r
 	double volatility; //sigma
 	int nbPaths;
-	double estimate;      
-	double var;
+	double sumPayoff;    //somme des payoffs actualisés
+	double sumPayoff_Square;  // somme des carrés des payoffs actualisés
 
 public:
 	BlackScholesMCPricer(Option* option, double initial_price, double interest_rate, double volatility);
@@ -29,6 +29,7 @@ public:
 
 
 };
+
 
 
 
