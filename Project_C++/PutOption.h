@@ -1,6 +1,5 @@
 #pragma once
-#ifndef PUTOPTION_H
-#define PUTOPTION_H
+
 #include "EuropeanVanillaOption.h"
 #include <algorithm>
 
@@ -14,5 +13,4 @@ public :
 	optionType GetOptionType() const override;
 
 };
-#endif // !PUTOPTION_H
 

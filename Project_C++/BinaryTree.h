@@ -1,6 +1,4 @@
 #pragma once
-#ifndef BINARY_TREE_H
-#define BINARY_TREE_H
 
 #include <iostream>
 #include <vector>
@@ -23,5 +21,3 @@ class BinaryTree{
 
         void display() const;
 };
-
-#endif

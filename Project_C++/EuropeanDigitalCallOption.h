@@ -1,6 +1,4 @@
 #pragma once
-#ifndef EUROPEANDIGITALCALLOPTION_H
-#define EUROPEANDIGITALCALLOPTION_H
 
 #include "EuropeanDigitalOption.h"
 #include <algorithm>
@@ -13,5 +11,3 @@ public:
 
     digitalOptionType GetOptionType() const override;
 };
-
-#endif

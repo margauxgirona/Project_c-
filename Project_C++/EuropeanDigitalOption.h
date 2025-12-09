@@ -1,6 +1,4 @@
 #pragma once
-#ifndef EUROPEANDIGITALOPTION_H
-#define EUROPEANDIGITALOPTION_H
 
 #include "Option.h"
 #include <stdexcept> // to throw execptions
@@ -21,5 +19,3 @@ public:
 
     virtual ~EuropeanDigitalOption() = default; 
 };
-
-#endif

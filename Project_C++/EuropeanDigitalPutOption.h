@@ -1,6 +1,4 @@
 #pragma once
-#ifndef EUROPEANDIGITALPUTOPTION_H
-#define EUROPEANDIGITALPUTOPTION_H
 
 #include "EuropeanDigitalOption.h"
 #include <algorithm>
@@ -13,5 +11,3 @@ public:
 
     digitalOptionType GetOptionType() const override;
 };
-
-#endif

@@ -1,6 +1,4 @@
 #pragma once
-#ifndef OPTION_H
-#define OPTION_H
 
 #include <iostream>
 #include <vector>
@@ -26,6 +24,5 @@ public:
 	
 	
 };
-#endif // !OPTION_H
 
 

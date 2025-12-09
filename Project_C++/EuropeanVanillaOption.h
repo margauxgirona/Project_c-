@@ -1,6 +1,4 @@
 #pragma once
-#ifndef EUROPEANVANILLAOPTION_h
-#define EUROPEANVANILLAOPTION_h
 
 #include "Option.h"
 #include <stdexcept> // pour lancer les exeptions
@@ -26,5 +24,3 @@ class EuropeanVanillaOption : public Option {
 
 		virtual ~EuropeanVanillaOption() {}
 };
-
-#endif // !EUROPEANVANILLAOPTION.h

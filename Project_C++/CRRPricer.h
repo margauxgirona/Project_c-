@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CRRPRICER_H
-#define CRRPRICER_H
 
 #include <iostream>
 #include "Option.h"
@@ -44,5 +42,3 @@ class CRRPricer{
         BinaryTree<double> get_S() const {return _S; }
         BinaryTree<double> get_H() const {return _H; }
 };
-
-#endif

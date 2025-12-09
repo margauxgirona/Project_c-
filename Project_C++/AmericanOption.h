@@ -1,7 +1,4 @@
 #pragma once
-#ifndef AMERICANOPTION_H
-#define AMERICANOPTION_H
-
 #include "Option.h"
 
 
@@ -19,7 +16,4 @@ public:
 	virtual double payoff(double S) const = 0;
 };
 
-
-
-#endif // !AMERICANOPTION_H
 

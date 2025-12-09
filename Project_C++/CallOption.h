@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CALLOPTION_H
-#define CALLOPTION_H
 
 #include "EuropeanVanillaOption.h"
 #include <algorithm>
@@ -13,4 +11,3 @@ public :
 
 	optionType GetOptionType() const override;
 };
-#endif // !CALLOPTION_H

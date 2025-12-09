@@ -1,7 +1,4 @@
 #pragma once
-#ifndef BLACKSCHOLESPRICER_H
-#define BLACKSCHOLESPRICER_H
-
 #include "EuropeanVanillaOption.h"
 #include "EuropeanDigitalOption.h"
 #include <cmath>
@@ -32,5 +29,4 @@ public:
 	double delta() const;
 };
 
-#endif // !BLACKSCHOLESPRICER_H
 
