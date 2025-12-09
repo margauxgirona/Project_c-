@@ -40,10 +40,9 @@ _option(option), _depth(depth), _S0(asset_price), _r(r){
 
 }
 
-
 void CRRPricer::compute(){
     // Precompute powers (1+u)^i and (1+d)^j
-    vector<double> upPow(_depth+1), downPow(_depth+1);
+    std::vector<double> upPow(_depth+1), downPow(_depth+1);
     upPow[0] = downPow[0] = 1.0;
 
     for (int i = 1; i <= _depth; i++) {
