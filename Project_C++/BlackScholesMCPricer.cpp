@@ -19,8 +19,8 @@ void BlackScholesMCPricer::generate(int nb_paths) {
         throw std::invalid_argument("Le nombre de trajectoires doit être un entier positif.");
     }
 
-    std::vector<double> path; 
-    int nSteps = 0;
+    std::vector<double> path(1); 
+    int nSteps = 1;
     std::vector<double> timeSteps; // pour AsianOption
 	
     AsianOption* asian = nullptr;
@@ -29,9 +29,6 @@ void BlackScholesMCPricer::generate(int nb_paths) {
         timeSteps = asian->getTimeSteps();
         nSteps = timeSteps.size();
         path.resize(nSteps);
-    } else {
-        nSteps = 1;
-        path.resize(1);
     }
     // Boucle sur toutes les trajectoires
     for (int i = 0; i < nb_paths; i++) {

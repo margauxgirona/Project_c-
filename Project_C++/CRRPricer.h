@@ -17,8 +17,6 @@ class CRRPricer{
         double _d;
         double _r;
 
-        // tree of prices of the underlying asset, sert à rien
-        BinaryTree<double> _S;
         // tree of prices of the option
         BinaryTree<double> _H;
         // boolean tree of early exercises
@@ -38,7 +36,4 @@ class CRRPricer{
         bool getExercise(int n, int i) const;
 
         double operator()(bool closed_form = false);
-
-        BinaryTree<double> get_S() const {return _S; }
-        BinaryTree<double> get_H() const {return _H; }
 };

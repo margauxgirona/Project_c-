@@ -11,7 +11,6 @@ CRRPricer::CRRPricer(Option * option, int depth, double asset_price, double up, 
         else if (option->isAsianOption())
             throw std::invalid_argument("Is Asian option");
 
-        _S.setDepth(depth);
         _H.setDepth(depth);
         _Exercise.setDepth(depth);
 
@@ -33,7 +32,6 @@ _option(option), _depth(depth), _S0(asset_price), _r(r){
     else if (option->isAsianOption())
             throw std::invalid_argument("Is Asian option");
     
-    _S.setDepth(depth);
     _H.setDepth(depth);
     _Exercise.setDepth(depth);  
     _computed = false;
@@ -81,12 +79,11 @@ void CRRPricer::compute(){
         // compute _H
         for (int n = _depth - 1; n >= 0; n--) {
             for (int i = 0; i <= n; i++) {
-                double value = q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i) * inv_r;
+                double value = (q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i)) * inv_r;
                 _H.setNode(n, i, value);
             }
         }
     }
-
     _computed = true;
 }
 
@@ -100,6 +97,15 @@ bool CRRPricer::getExercise(int n, int i) const {
             return _Exercise.getNode(n, i);
         }
 
+// function created to replace std::pow()
+// because std::pow() is generic and computationnally expensive 
+
+double CRRPricer::intPow(double a, int exponent) const{
+    double result = 1.0;
+    for(int i = 0; i < exponent; i++)
+        result *= a;
+    return result;
+}
 
 double CRRPricer::operator()(bool closed_form) {
     if (!(_computed))
@@ -108,19 +114,22 @@ double CRRPricer::operator()(bool closed_form) {
     if (!closed_form)
         return _H.getNode(0, 0);
 
-    double discount = 1.0 / std::pow(1 + _r, _depth);
+    double discount = 1.0 / intPow(1 + _r, _depth);
 
     double q  = (_r - _d) / (_u - _d);
     double pq = q;           // q^i
     double p1 = 1.0 - q;     // (1-q)
-    double p1pow = std::pow(p1, _depth); // initial: (1-q)^N
+    double p1pow = intPow(p1, _depth); // initial: (1-q)^N
 
     long double C = 1.0;     // C(N,0)
     double sum = 0.0;
 
+    double ST = _S0 * intPow(_d, _depth);
+    double ud = _u / _d;
+
     for (int i = 0; i <= _depth; i++) {
 
-        sum += C * pq * p1pow * _option->payoff(_S.getNode(_depth, i));
+        sum += C * pq * p1pow * _option->payoff(ST);
 
         if (i < _depth) { // To avoid calculate the last update
 
@@ -130,6 +139,8 @@ double CRRPricer::operator()(bool closed_form) {
             pq    *= q;        // q^i   -> q^(i+1)
             p1pow /= p1;       // (1-q)^(N-i) -> (1-q)^(N-i-1)
         }
+
+        ST *= ud;
     }
 
     return discount * sum;
@@ -137,15 +148,7 @@ double CRRPricer::operator()(bool closed_form) {
 
 /*
 
-// function created to replace std::pow()
-// because std::pow() is generic and computationnally expensive 
-//On peut faire mieux, référence
-double CRRPricer::intPow(double a, int exponent) const{
-    double result = 1.0;
-    for(int i = 0; i < exponent; i++)
-        result *= a;
-    return result;
-}
+
     
 void CRRPricer::compute(){
     // fill the _stockTree with the prices
