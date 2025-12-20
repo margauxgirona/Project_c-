@@ -1,5 +1,4 @@
 #pragma once
-
 #include "EuropeanVanillaOption.h"
 #include <algorithm>
 
@@ -11,6 +10,5 @@ public :
 	double payoff(double S) const override;
 
 	optionType GetOptionType() const override;
-
 };
 

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "EuropeanDigitalOption.h"
 #include <algorithm>
 

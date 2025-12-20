@@ -1,13 +1,12 @@
 #pragma once
-
 #include "Option.h"
-#include <stdexcept> // to throw execptions
+#include <stdexcept> 
 
 class EuropeanDigitalOption : public Option {
 private :
 	double _strike;
 public:
-	enum digitalOptionType { call, put };
+	enum digitalOptionType {call, put};
 
 	EuropeanDigitalOption(double expiry, double strike);
 

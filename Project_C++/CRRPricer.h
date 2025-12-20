@@ -23,13 +23,15 @@ class CRRPricer{
         BinaryTree<bool> _Exercise;
 
         bool _computed;
+
+        // function to compute the power 
+        double intPow(double a, int exponent) const;
     
     public:
         CRRPricer(Option * option, int depth, double asset_price, double up, double down, double interest_rate);
         
         CRRPricer(Option* option, int depth, double asset_price, double r, double volatility);
 
-        double intPow(double a, int exponent) const;
         void compute();
 
         double get(int n, int i) const;

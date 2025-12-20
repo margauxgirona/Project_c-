@@ -13,7 +13,7 @@ private:
 	double interest_rate;
 	double volatility;
 
-	//Fonction auxiliaire
+	// Auxiliary function
 	double N(double x) const {
 		return 0.5 * erfc(-x /sqrt(2.0));
 	}
@@ -23,9 +23,9 @@ public:
 	
 	BlackScholesPricer(EuropeanDigitalOption* option, double asset_price, double interest_rate, double volatility);
 
-	//prix
+	// price
 	double operator()() const;
-	//delta
+	// delta
 	double delta() const;
 };
 

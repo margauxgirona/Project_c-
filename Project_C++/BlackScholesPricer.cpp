@@ -3,12 +3,12 @@
 #include "PutOption.h"
 #include <cmath>
 
-BlackScholesPricer::BlackScholesPricer(EuropeanVanillaOption* option, double asset_price, double interest_rate, double volatility): vanilla(option), asset_price(asset_price), interest_rate(interest_rate), volatility(volatility) {}
+BlackScholesPricer::BlackScholesPricer(EuropeanVanillaOption* option, double asset_price, double interest_rate, double volatility) : vanilla(option), asset_price(asset_price), interest_rate(interest_rate), volatility(volatility) {}
 
 BlackScholesPricer::BlackScholesPricer(EuropeanDigitalOption* option, double asset_price, double interest_rate, double volatility) : digital(option), asset_price(asset_price), interest_rate(interest_rate), volatility(volatility) {}
 
 
-//calcul du prix
+// Price computation
 double BlackScholesPricer::operator()() const {
 	// vanilla option
 	if (vanilla) {

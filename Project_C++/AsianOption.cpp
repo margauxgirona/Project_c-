@@ -1,9 +1,10 @@
 #include "AsianOption.h"
 #include <stdexcept> 
 
-AsianOption::AsianOption(const std::vector<double>& timeSteps)
-    : Option(timeSteps.back()), _timeSteps(timeSteps) {
-    if (timeSteps.empty()) throw std::invalid_argument("Empty time steps");
+AsianOption::AsianOption(const std::vector<double>& timeSteps) : Option(timeSteps.back()), _timeSteps(timeSteps) {
+    if (timeSteps.empty()) {
+        throw std::invalid_argument("Empty time steps");
+    }
 }
 
 std::vector<double> AsianOption::getTimeSteps() const {

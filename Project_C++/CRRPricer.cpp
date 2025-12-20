@@ -66,11 +66,15 @@ void CRRPricer::compute(){
                            (1 - q) * _H.getNode(n+1, i)) * inv_r;
     
                 double intrinsic = _option->payoff(_S0 * upPow[i] * downPow[n - i]);
-
-                bool exercise = (intrinsic >= continuation);
-
-                _H.setNode(n, i, exercise ? intrinsic : continuation);
-                _Exercise.setNode(n, i, exercise);
+                
+                if (intrinsic >= continuation) {
+                    _H.setNode(n, i, intrinsic);
+                    _Exercise.setNode(n, i, true);
+                }
+                else {
+                    _H.setNode(n, i, continuation);
+                    _Exercise.setNode(n, i, false);
+                }                
             }
         }
     }
@@ -89,17 +93,16 @@ void CRRPricer::compute(){
 
 double CRRPricer::get(int n, int i) const {
     if (n > _depth || i > n)
-        throw std::out_of_range("CRRPricer::get indices out of range");
+        throw std::out_of_range("CRRPricer : get function : get indices out of range");
     return _H.getNode(n, i);
 }
 
 bool CRRPricer::getExercise(int n, int i) const {
             return _Exercise.getNode(n, i);
-        }
+}
 
 // function created to replace std::pow()
 // because std::pow() is generic and computationnally expensive 
-
 double CRRPricer::intPow(double a, int exponent) const{
     double result = 1.0;
     for(int i = 0; i < exponent; i++)
@@ -117,15 +120,15 @@ double CRRPricer::operator()(bool closed_form) {
     double discount = 1.0 / intPow(1 + _r, _depth);
 
     double q  = (_r - _d) / (_u - _d);
-    double pq = q;           // q^i
+    double pq = 1.0;           // q^0
     double p1 = 1.0 - q;     // (1-q)
     double p1pow = intPow(p1, _depth); // initial: (1-q)^N
 
     long double C = 1.0;     // C(N,0)
     double sum = 0.0;
 
-    double ST = _S0 * intPow(_d, _depth);
-    double ud = _u / _d;
+    double ST = _S0 * intPow(1.0 + _d, _depth);
+    double ud = (1.0 + _u) / (1.0 + _d);
 
     for (int i = 0; i <= _depth; i++) {
 
@@ -136,100 +139,11 @@ double CRRPricer::operator()(bool closed_form) {
             C = C * (_depth - i) / (i + 1);
 
             // Update powers
-            pq    *= q;        // q^i   -> q^(i+1)
-            p1pow /= p1;       // (1-q)^(N-i) -> (1-q)^(N-i-1)
-        }
-
-        ST *= ud;
+            pq *= q;        // q^i   -> q^(i+1)
+            p1pow /= p1;    // (1-q)^(N-i) -> (1-q)^(N-i-1)
+            ST *= ud;
+        }        
     }
 
     return discount * sum;
 }
-
-/*
-
-
-    
-void CRRPricer::compute(){
-    // fill the _stockTree with the prices
-    //Boucler une seule fois
-    for(int n = 0; n <= _depth; n++){
-        for(int i = 0; i <= n; i++){
-            _S.setNode(n, i, _S0 * intPow(1 + _u, i) * intPow(1 + _d, n-i));
-            
-        }
-    }
-    // at expiracy date (at N = _depth), fair etout en une seule boucle
-    for(int i = 0; i <= _depth; i++){
-        _H.setNode(_depth, i, _option->payoff(_S.getNode(_depth, i)));
-    }
-
-    // risk neutral probability
-    double q = (_r - _d) / (_u - _d);
-
-    
-    if (_option->isAmericanOption()) {
-        for (int n = _depth - 1; n >= 0; n--) {
-            for (int i = 0; i <= n; i++) {
-                // Valeur de continuation
-                double continuation = (q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i)) / (1 + _r);
-
-                // Valeur d'exercice immediat
-                double intrinsic = _option->payoff(_S.getNode(n, i));
-
-                if (intrinsic >= continuation) {
-                    _H.setNode(n, i, intrinsic);
-                    _Exercise.setNode(n, i, true);}
-                else {
-                    _H.setNode(n, i, continuation);
-                    _Exercise.setNode(n, i, false);}
-            }
-        }
-    }
-
-    else {
-        // compute _H
-        for (int n = _depth - 1; n >= 0; n--) {
-            for (int i = 0; i <= n; i++) {
-                double value = q * _H.getNode(n + 1, i + 1) + (1 - q) * _H.getNode(n + 1, i);
-                value /= (1 + _r);
-                _H.setNode(n, i, value);
-            }
-        }
-    }
-
-    _computed = true; 
-}
-
-*/
-
-
-/*
-
-static long double factorial(int n) {
-    long double res = 1.0;
-    for (int i = 2; i <= n; ++i)
-        res *= i;
-    return res;
-}
-
-//Optimiser factorielle, triangle de Pascal
-
-double CRRPricer::operator()(bool closed_form) {
-    if (!(_computed))
-        compute();
-    
-    if (!(closed_form))
-        return _H.getNode(0, 0);
-    else{
-        double discount = 1 / intPow(1 + _r, _depth);
-        // risk neutral probability
-        double q = (_r - _d) / (_u - _d);
-        double facto_N = factorial(_depth);
-        double sum = 0.0;
-        for(int i = 0; i <= _depth; i++){
-            sum += (facto_N / (factorial(i) * factorial(_depth - i))) * intPow(q, i) * intPow(1 - q, _depth - i) * _option->payoff(_S.getNode(_depth, i));
-        }
-        return discount * sum;
-    }
-}*/

@@ -1,7 +1,6 @@
 #pragma once
-
 #include "Option.h"
-#include <stdexcept> // pour lancer les exeptions
+#include <stdexcept>
 
 class BlackScholesPricer;
 
@@ -10,11 +9,8 @@ class EuropeanVanillaOption : public Option {
 		double _strike;
 
 	public:
-		enum optionType
-		{
-			call,
-			put
-		};
+		enum optionType {call, put};
+
 		EuropeanVanillaOption(double expiry, double strike);
 
 		double getStrike() const;

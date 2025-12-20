@@ -6,5 +6,4 @@ public:
 	AmericanCallOption(double expiry, double strike);
 
 	double payoff(double S) const override;
-
 };

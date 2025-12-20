@@ -16,12 +16,12 @@ int BlackScholesMCPricer::getNbPaths() const {
 
 void BlackScholesMCPricer::generate(int nb_paths) {
     if (nb_paths <= 0) {
-        throw std::invalid_argument("Le nombre de trajectoires doit être un entier positif.");
+        throw std::invalid_argument("Number of trajectories must be positive");
     }
 
     std::vector<double> path(1); 
     int nSteps = 1;
-    std::vector<double> timeSteps; // pour AsianOption
+    std::vector<double> timeSteps; // for AsianOption
 	
     AsianOption* asian = nullptr;
     if (option->isAsianOption()) {
@@ -30,7 +30,7 @@ void BlackScholesMCPricer::generate(int nb_paths) {
         nSteps = timeSteps.size();
         path.resize(nSteps);
     }
-    // Boucle sur toutes les trajectoires
+    // Loop on all trajectories
     for (int i = 0; i < nb_paths; i++) {
         if (asian) {
             double S = initial_price;
@@ -43,7 +43,7 @@ void BlackScholesMCPricer::generate(int nb_paths) {
                 path[k] = S;
                 t_previous = timeSteps[k];
             }
-        } else { // option vanilla
+        } else { // vanilla option
             double Z = MT::rand_norm();
             double ST = initial_price * std::exp((interest_rate - 0.5 * volatility * volatility) * option->getExpiry()
                                                  + volatility * std::sqrt(option->getExpiry()) * Z);
@@ -62,15 +62,15 @@ void BlackScholesMCPricer::generate(int nb_paths) {
 
 double BlackScholesMCPricer::operator() () const {
 	if (nbPaths == 0) {
-		throw std::runtime_error("Aucune trajectoire n'a encore été générée.");
+		throw std::runtime_error("No trajectory generated");
 	}
-	return sumPayoff / nbPaths;  //moyenne
+	return sumPayoff / nbPaths;
 }
 
 
 std::vector<double> BlackScholesMCPricer::confidenceInterval() const {
 	if (nbPaths <= 1) {
-		throw std::runtime_error("Il n'y a pas assez de trajectoire générée pour calculer l'IC.");
+		throw std::runtime_error("Not enough trajectories to compute the confidence interval");
 	}
     double mean = sumPayoff / nbPaths;
     double variance = (sumPayoff_Square - nbPaths * mean * mean) / (nbPaths - 1);

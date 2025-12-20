@@ -1,7 +1,7 @@
 #pragma once
-
 #include <iostream>
 #include <vector>
+
 class Option
 {
 private:
@@ -20,9 +20,4 @@ public:
 
 
 	virtual ~Option(); //Enlever si pas indispensable
-
-	
-	
 };
-
-

@@ -7,7 +7,7 @@ BinaryTree<T>::BinaryTree() : _depth(0) {}
 
 template<typename T>
 void BinaryTree<T>::setDepth(int d) {
-    // set new depth
+    // Set new depth
     _depth = d;
 
     // _tree is now a vector of size _depth + 1 wich represents N+1
@@ -22,14 +22,14 @@ void BinaryTree<T>::setDepth(int d) {
 template<typename T>
 void BinaryTree<T>::setNode(int n, int i, T value){
     if (n > _depth || i > n)
-        throw std::out_of_range("BinaryTree<T>::setNode indices out of range");
+        throw std::out_of_range("BinaryTree<T> : setNode function : indices out of range");
     _tree[n][i] = value;
 }
 
 template<typename T>
 T BinaryTree<T>::getNode(int n, int i) const{
     if (n > _depth || i > n)
-        throw std::out_of_range("BinaryTree<T>::setNode indices out of range");
+        throw std::out_of_range("BinaryTree<T> : setNode function : indices out of range");
     return _tree[n][i];
 }
 

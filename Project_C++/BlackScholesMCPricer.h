@@ -12,8 +12,8 @@ private:
 	double interest_rate; //r
 	double volatility; //sigma
 	int nbPaths;
-	double sumPayoff;    //somme des payoffs actualisés
-	double sumPayoff_Square;  // somme des carrés des payoffs actualisés
+	double sumPayoff;    //sum of actualised payoffs
+	double sumPayoff_Square;  // sum of squared actualised payoffs
 
 public:
 	BlackScholesMCPricer(Option* option, double initial_price, double interest_rate, double volatility);
@@ -25,9 +25,6 @@ public:
 	double operator() () const;
 
 	std::vector<double> confidenceInterval() const;
-
-
-
 };
 
 
