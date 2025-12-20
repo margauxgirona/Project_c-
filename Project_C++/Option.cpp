@@ -21,4 +21,4 @@ bool Option:: isAmericanOption() const {
 	return false;
 }
 
-Option::~Option() {}
+Option::~Option() = default;

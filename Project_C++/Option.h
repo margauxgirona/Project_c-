@@ -18,6 +18,5 @@ public:
 	virtual bool isAsianOption() const;
 	virtual bool isAmericanOption() const;
 
-
-	virtual ~Option(); //Enlever si pas indispensable
+	virtual ~Option();
 };

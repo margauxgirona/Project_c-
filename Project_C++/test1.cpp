@@ -35,7 +35,7 @@ int main() {
 */
 // test2
 
-
+/*
 #include <iostream>
 #include <vector>
 #include "CallOption.h"
@@ -46,7 +46,6 @@ int main() {
 #include "AsianPutOption.h"
 #include "BlackScholesMCPricer.h"
 
-
 int main() {
     double S0(100.), K(101.), T(5.), r(0.01), sigma(0.1);
     std::vector<Option*> opt_ptrs;
@@ -56,7 +55,7 @@ int main() {
     opt_ptrs.push_back(new EuropeanDigitalPutOption(T, K));
 
     std::vector<double> fixing_dates;
-    int m=50; // 60 mois
+    int m=1; // 60 mois
     for (int i = 1; i <= m; ++i) fixing_dates.push_back(i*0.1);
     opt_ptrs.push_back(new AsianCallOption(fixing_dates, K));
     opt_ptrs.push_back(new AsianPutOption(fixing_dates, K));
@@ -77,10 +76,10 @@ int main() {
     }
 }
 
-
+*/
 //test1
 
-/*
+
 #include <iostream>
 #include "CallOption.h"
 #include "PutOption.h"
@@ -201,4 +200,3 @@ int main() {
         std::cout << std::endl << "*********************************************************" << std::endl;
     }
 }
-*/
